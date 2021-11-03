@@ -1,0 +1,18 @@
+service: slack-app
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-north-1
+  role: arn:aws:iam::496649707901:role/slackbot
+  timeout: 5
+  stage: ${opt:stage, 'dev'}
+  memorySize: 128
+functions:
+  dispatcher:
+    handler: bot.run
+    description: description
+    events:
+      - sns: MyBotMessages
+      - http:
+          path: "/messages"
+          method: post 
